@@ -11,6 +11,26 @@ const routes = [
     component: Home
   },
   {
+    path: '/showMovie',
+    name: 'MovieDetail',
+    component: () => import(/* webpackChunkName: "detail" */ '../views/MovieDetail.vue')
+  },
+  {
+    path: '/user',
+    name: 'User',
+    component: () => import(/* webpackChunkName: "detail" */ '../views/User.vue')
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import(/* webpackChunkName: "detail" */ '../views/Login.vue')
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: () => import(/* webpackChunkName: "detail" */ '../views/Register.vue')
+  },
+  {
     path: '/about',
     name: 'About',
     // route level code-splitting
@@ -21,7 +41,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes
 })
