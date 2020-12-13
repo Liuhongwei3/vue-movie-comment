@@ -23,6 +23,9 @@ import {
   FormItem,
   DatePicker,
   TimePicker,
+  Table,
+  TableColumn,
+  Progress,
 } from "element-ui";
 
 Vue.use(Pagination);
@@ -44,6 +47,9 @@ Vue.use(Form);
 Vue.use(FormItem);
 Vue.use(DatePicker);
 Vue.use(TimePicker);
+Vue.use(Table);
+Vue.use(TableColumn);
+Vue.use(Progress);
 
 Vue.use(Loading.directive);
 

@@ -23,7 +23,7 @@
         <el-button type="primary" @click="onSubmit">Register</el-button>
       </el-form-item>
     </el-form>
-    <router-link class="toReg" to="/login">>>> has account?</router-link>
+    <router-link class="toReg" to="/user/login">>>> has account?</router-link>
   </div>
 </template>
 
@@ -32,7 +32,7 @@ import { notify } from "@/utils";
 import doReq from "@/network/doReq";
 
 export default {
-  name: "Register",
+  name: "UserRegister",
   data() {
     return {
       form: { userName: "", userSex: "", userPwd: "" },

@@ -162,7 +162,7 @@ export default {
           "警告",
           "您还未登录，请先登录！(2s 后跳转至登录界面)"
         );
-        setTimeout(() => this.$router.push("/login"), 2000);
+        setTimeout(() => this.$router.push("/user/login"), 2000);
       }
     },
     publish() {

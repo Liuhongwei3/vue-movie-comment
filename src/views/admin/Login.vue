@@ -1,19 +1,18 @@
 <template>
   <div class="login">
-    <h2 style="color: orange">User Login</h2>
+    <h2 style="color: orange">Admin Login</h2>
     <el-form label-width="80px" ref="form" :model="form" :rules="rules">
-      <el-form-item label="用户名" prop="userName">
-        <el-input clearable v-model="form.userName"></el-input>
+      <el-form-item label="用户名" prop="adminName">
+        <el-input clearable v-model="form.adminName"></el-input>
       </el-form-item>
-      <el-form-item label="密码" prop="userPwd">
-        <el-input clearable type="password" v-model="form.userPwd"></el-input>
+      <el-form-item label="密码" prop="adminPwd">
+        <el-input clearable type="password" v-model="form.adminPwd"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="warning" @click="onReset">Reset</el-button>
         <el-button type="primary" @click="onSubmit">Login</el-button>
       </el-form-item>
     </el-form>
-    <router-link class="toReg" to="/register">>>> no account?</router-link>
   </div>
 </template>
 
@@ -25,10 +24,10 @@ export default {
   name: "Login",
   data() {
     return {
-      form: { userName: "", userPwd: "" },
+      form: { adminName: "", adminPwd: "" },
       rules: {
-        userName: [
-          { required: true, message: "请输入用户名", trigger: "blur" },
+        adminName: [
+          { required: true, message: "请输入管理员名", trigger: "blur" },
           {
             min: 3,
             max: 15,
@@ -36,7 +35,7 @@ export default {
             trigger: "blur",
           },
         ],
-        userPwd: [
+        adminPwd: [
           { required: true, message: "请输入正确的密码", trigger: "blur" },
         ],
       },
@@ -46,20 +45,20 @@ export default {
     onSubmit() {
       this.$refs.form.validate(async (valid) => {
         if (valid) {
-          let { userName, userPwd } = this.form;
+          let { adminName, adminPwd } = this.form;
           let { data } = await doReq(
-            `/user/getUserPwdByName?userName=${this.form.userName}`
+            `/admin/selectAdminByName?adminName=${adminName}`
           );
 
-          if (userPwd == data) {
-            notify("success", "成功", `登录成功，欢迎 ${userName}!`);
-            window.sessionStorage.setItem("userName", userName);
-            this.$router.push("/");
+          if (adminPwd == data[0].adminPwd) {
+            notify("success", "成功", `登录成功，欢迎 ${adminName}!`);
+            window.sessionStorage.setItem("adminName", adminName);
+            this.$router.push("/admin");
           } else {
-            notify("warning", "警告", "请按照提示输入正确的用户名和密码！");
+            notify("warning", "警告", "请按照提示输入正确的管理员名和密码！");
           }
         } else {
-          notify("warning", "警告", "请按照提示输入正确的用户名和密码！");
+          notify("warning", "警告", "请按照提示输入正确的管理员名和密码！");
           return false;
         }
       });
@@ -78,11 +77,5 @@ export default {
   margin: 0 auto;
   padding: 60px;
   position: relative;
-}
-
-.toReg {
-  position: absolute;
-  bottom: 10px;
-  right: 5px;
 }
 </style>

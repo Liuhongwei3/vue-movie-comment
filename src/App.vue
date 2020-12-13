@@ -5,6 +5,7 @@
       <div class="head-link">
         <router-link to="/">Home</router-link> |
         <router-link to="/user">User</router-link> |
+        <router-link to="/admin">Admin</router-link> |
         <router-link to="/about">About</router-link>
       </div>
     </div>
@@ -13,16 +14,16 @@
     <router-view />
 
     <el-divider></el-divider>
-    <foot/>
+    <foot />
   </div>
 </template>
 
 <script>
-import Foot from "@/views/Foot"
+import Foot from "@/views/Foot";
 
 export default {
   name: "App",
-  components: {Foot},
+  components: { Foot },
 };
 </script>
 
@@ -57,5 +58,13 @@ export default {
   justify-content: center;
   align-items: center;
   width: 70vw;
+}
+
+.el-tabs__nav {
+  margin-left: 6px;
+}
+
+.el-tabs__item {
+  color: #fff !important;
 }
 </style>

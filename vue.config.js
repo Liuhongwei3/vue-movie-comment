@@ -23,6 +23,13 @@ module.exports = {
           "^/user": "",
         },
       },
+      "/admin": {
+        target: "http://localhost:8080/ssm_project_war_exploded/admin",
+        changeOrigin: true,
+        pathRewrite: {
+          "^/admin": "",
+        },
+      },
       "/comment": {
         target: "http://localhost:8080/ssm_project_war_exploded/comment",
         changeOrigin: true,

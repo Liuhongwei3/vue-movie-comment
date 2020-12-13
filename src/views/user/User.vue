@@ -5,56 +5,67 @@
     element-loading-spinner="el-icon-loading"
     element-loading-background="rgba(0, 0, 0, 0.8)"
   >
-    <h2>User Center</h2>
-    <div class="user">
-      <el-tooltip effect="dark" content="用户名" placement="left">
-        <el-tag
-          class="user-info"
-          type="primary"
-          effect="dark"
-          @click="dialogVisible = true"
-          >{{ userInfo.userName }}</el-tag
-        >
-      </el-tooltip>
-      <el-tooltip effect="dark" content="性别" placement="right">
-        <el-tag class="user-info" type="danger">{{ userInfo.userSex }}</el-tag>
-      </el-tooltip>
+    <div v-if="userId === 0">
+      <el-tag type="danger">您还未登录，请先登录！</el-tag>
     </div>
-    <el-divider></el-divider>
-
-    <div v-if="comments.length === 0">
-      <el-tag type="warning">暂无评论 -__-</el-tag>
-    </div>
-
-    <div class="comment">
-      <div class="comment-item" v-for="item in comments" :key="item.commentId">
-        <el-tag type="danger" effect="dark" color="transparent">{{
-          item.commentUName
-        }}</el-tag>
-        <span class="comm-time"> --- {{ item.commentTime }} --- </span>
-        <i
-          class="el-icon-circle-close delete"
-          @click="doDelete(item.commentId)"
-        ></i>
-        <h4>{{ item.commentContent }}</h4>
+    <div v-else>
+      <h2>User Center</h2>
+      <div class="user">
+        <el-tooltip effect="dark" content="用户名" placement="left">
+          <el-tag
+            class="user-info"
+            type="primary"
+            effect="dark"
+            @click="dialogVisible = true"
+            >{{ userInfo.userName }}</el-tag
+          >
+        </el-tooltip>
+        <el-tooltip effect="dark" content="性别" placement="right">
+          <el-tag class="user-info" type="danger">{{
+            userInfo.userSex
+          }}</el-tag>
+        </el-tooltip>
       </div>
+      <el-divider></el-divider>
+
+      <div v-if="comments.length === 0">
+        <el-tag type="warning">暂无评论 -__-</el-tag>
+      </div>
+
+      <div class="comment">
+        <div
+          class="comment-item"
+          v-for="item in comments"
+          :key="item.commentId"
+        >
+          <el-tag type="danger" effect="dark" color="transparent">{{
+            item.commentUName
+          }}</el-tag>
+          <span class="comm-time"> --- {{ item.commentTime }} --- </span>
+          <i
+            class="el-icon-circle-close delete"
+            @click="doDelete(item.commentId)"
+          ></i>
+          <h4>{{ item.commentContent }}</h4>
+        </div>
+      </div>
+
+      <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
+        <span>确定要退出当前用户吗？</span>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="logOut">确 定</el-button>
+        </span>
+      </el-dialog>
+
+      <el-dialog title="提示" :visible.sync="commDialogVisible" width="30%">
+        <span>确定要删除该评论？</span>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="commDialogVisible = false">取 消</el-button>
+          <el-button type="warning" @click="deleteComment">确 定</el-button>
+        </span>
+      </el-dialog>
     </div>
-
-    <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
-      <span>确定要退出当前用户吗？</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="logOut">确 定</el-button>
-      </span>
-    </el-dialog>
-
-    <el-dialog title="提示" :visible.sync="commDialogVisible" width="30%">
-      <span>确定要删除该评论？</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="commDialogVisible = false">取 消</el-button>
-        <el-button type="warning" @click="deleteComment">确 定</el-button>
-      </span>
-    </el-dialog>
   </div>
 </template>
 
@@ -80,8 +91,12 @@ export default {
     await this.reqSth();
 
     if (this.userId === 0) {
-      notify("warning", "警告", "您还未登录，请先登录！");
-      this.$router.push("/login");
+      notify(
+        "warning",
+        "警告",
+        "您还未登录，请先登录！(2s后自动跳转至登录界面)"
+      );
+      setTimeout(() => this.$router.push("/user/login"), 2000);
     }
   },
   methods: {
@@ -171,11 +186,11 @@ export default {
   padding: 20px;
 }
 
-.comment-item:hover{
+.comment-item:hover {
   cursor: pointer;
 }
 
-.comm-time{
+.comm-time {
   font-size: 14px;
   color: #bad774;
 }

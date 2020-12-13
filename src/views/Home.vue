@@ -43,7 +43,6 @@ export default {
   methods: {
     async reqSth() {
       let { data } = await doReq("/movie/queryMoviePage");
-      console.log(data);
       this.movies = data;
     },
     toDetail(vid) {
